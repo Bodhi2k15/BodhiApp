@@ -3,17 +3,12 @@ package com.lmntrx.bodhi15;
 import android.app.Activity;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
 
@@ -27,11 +22,18 @@ public class MainActivity extends Activity {
     public static Context CON;
 
     //result=isWorkinginternet?
-    boolean result;
+    boolean isConnected;
+
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.place_holder_activity);
+
+        mProgressBar=(ProgressBar)findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         CON=this;
 
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    result=new NetworkStatusCheck().execute().get();
+                    isConnected=new NetworkStatusCheck().execute().get();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -49,7 +51,9 @@ public class MainActivity extends Activity {
         thread.run();
 
 
-        if(result){ //Network Availability Check
+        if(isConnected){ //if Network is available
+
+            findViewById(R.id.placeHolder).setVisibility(View.GONE);
 
             mWebview  = new WebView(this);
 

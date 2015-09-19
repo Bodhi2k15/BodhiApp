@@ -25,7 +25,7 @@ public class NetworkStatusCheck extends AsyncTask<Void, Void, Boolean> {
         if (isNetworkAvailable(CON)) {
             try {
                 HttpURLConnection urlc = (HttpURLConnection) (
-                new URL("http://www.lmntrx.com").openConnection());
+                new URL("http://www.lmntrx.com").openConnection()); //LmntrX :D
                 urlc.setRequestProperty("User-Agent", "Test");
                 urlc.setRequestProperty("Connection", "close");
                 urlc.setConnectTimeout(1500);
